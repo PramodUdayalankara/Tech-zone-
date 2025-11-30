@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Login - Tech zone POS</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Styles (NOTE: ../ because we are inside /pages) -->
+    <link href="../assets/styles/bootstrap-5.2.1-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="../assets/styles/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+    <link href="../assets/styles/style.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+
+<script>
+    // Already logged in nam home page ekata (../index.html) redirect wenna
+    (function () {
+        if (localStorage.getItem('posLoggedIn') === 'true') {
+            window.location.href = '../index.html';
+        }
+    })();
+</script>
+
+<div class="container d-flex align-items-center justify-content-center" style="min-height:100vh">
+    <div class="card shadow-lg" style="max-width:400px;width:100%;">
+        <div class="card-header text-center bg-white border-0">
+            <!-- logo path ekath ../ -->
+            <img src="../assets/images/logo.png" alt="Logo" width="60" class="mb-2">
+            <h5 class="mb-0"><span class="text-success">Tech zone</span> POS Login</h5>
+        </div>
+        <div class="card-body">
+            <form id="loginForm" autocomplete="off">
+                <div class="mb-3">
+                    <label for="username" class="form-label">Username</label>
+                    <input id="username" class="form-control" required>
+                </div>
+                <div class="mb-3">
+                    <label for="password" class="form-label">Password</label>
+                    <input id="password" type="password" class="form-control" required>
+                </div>
+                <div class="mb-2 text-muted small">
+                    <div><strong>Demo Login:</strong></div>
+                    <div>Username: <code>admin</code></div>
+                    <div>Password: <code>1234</code></div>
+                </div>
+                <div class="d-grid">
+                    <button type="submit" class="btn btn-success">Log In</button>
+                </div>
+                <div id="loginError" class="text-danger small mt-2" style="display:none"></div>
+            </form>
+        </div>
+        <div class="card-footer text-center small text-muted">
+            Tech zone POS &copy; 2025
+        </div>
+    </div>
+</div>
+
+<!-- JS (NOTE: ../ paths) -->
+<script src="../assets/styles/jQuery/jquery-3.6.1.min.js"></script>
+<script src="../assets/styles/bootstrap-5.2.1-dist/js/bootstrap.min.js"></script>
+
+<script>
+    (function () {
+        const VALID_USER = 'admin';
+        const VALID_PASS = '1234';
+
+        $('#loginForm').on('submit', function (e) {
+            e.preventDefault();
+
+            const u = $('#username').val().trim();
+            const p = $('#password').val().trim();
+
+            if (u === VALID_USER && p === VALID_PASS) {
+                localStorage.setItem('posLoggedIn', 'true');
+                localStorage.setItem('posLoggedUser', u);
+                // login success -> go to home (one level up)
+                window.location.href = '../index.html';
+            } else {
+                $('#loginError')
+                    .text('Invalid username or password')
+                    .show();
+            }
+        });
+    })();
+</script>
+
+</body>
+</html>
